@@ -30,7 +30,7 @@ class SiteDiary extends StatelessWidget {
                   minWidth: 20,
                   onPressed: () {},
                   elevation: 1.0,
-                  color: Colors.black,
+                  color: Colors.grey,
                   shape: const CircleBorder(),
                   child: const Icon(
                     Icons.question_mark_sharp,
