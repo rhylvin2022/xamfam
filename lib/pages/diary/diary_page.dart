@@ -1,16 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:xamfam/pages/diary/cards/existing_events_card.dart';
 import 'package:xamfam/pages/diary/cards/photo_card.dart';
 import 'package:xamfam/pages/diary/site_diary.dart';
+import 'package:xamfam/redux/diary/diary_action.dart';
 
+import '../../redux/app_state.dart';
 import 'cards/card_spacing.dart';
 import 'cards/comments_card.dart';
 import 'cards/details_card.dart';
 import 'location.dart';
+import 'package:redux/redux.dart';
 
-class DiaryPage extends StatelessWidget {
+class DiaryPage extends StatefulWidget {
   DiaryPage({Key? key}) : super(key: key);
+
+  @override
+  _DiaryPageState createState() => _DiaryPageState();
+}
+
+class _DiaryPageState extends State<DiaryPage> {
+
+  Store<dynamic>? store;
+  @override
+  void initState() {
+    super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      runInitTasks();
+    });
+  }
+
+  @protected
+  Future runInitTasks() async {
+    final store = StoreProvider.of<AppState>(context);
+    store?.dispatch(GetLocation());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +79,10 @@ class DiaryPage extends StatelessWidget {
                                   fontSize: 15, color: Colors.white)),
                           child: SizedBox(
                               width: (MediaQuery.of(context).size.width * 0.75),
-                              child: Center(child: Text('Next'))),
-                          onPressed: () {},
+                              child: const Center(child: Text('Next'))),
+                          onPressed: () {
+                            store?.dispatch(NextButton());
+                          },
                         ),
                         const CardSpacing(),
                       ],
@@ -69,3 +97,5 @@ class DiaryPage extends StatelessWidget {
     );
   }
 }
+
+
