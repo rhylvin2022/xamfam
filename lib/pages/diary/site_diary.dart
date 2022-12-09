@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:redux/redux.dart';
 
 import '../../redux/app_state.dart';

@@ -40,23 +40,22 @@ class DiaryMiddleware extends MiddlewareClass<AppState> {
       Future.forEach(
           store.state.diaryState.photos?.map((e) => e.path).toList() ?? [],
           (element) async {
-        photosBase64.add(base64Encode(
-            File(store.state.diaryState.photos?.first.path ?? '')
-                .readAsBytesSync()));
-      }).then((value) => {
-            api
-                .postAPI(
-                    photos: photosBase64,
-                    comment: store.state.diaryState.comment,
-                    item: store.state.diaryState.dropDownValue1,
-                    area: store.state.diaryState.dropDownValue2,
-                    taskCategory: store.state.diaryState.dropDownValue3,
-                    tags: store.state.diaryState.tags,
-                    events: store.state.diaryState.eventDropdownValue)
-                .then((value) {
-              print(value.body);
-            })
-          });
+        String base64String = base64Encode(File(element).readAsBytesSync());
+        photosBase64.add(base64String);
+      }).then((value) {
+        api
+            .postAPI(
+                photos: photosBase64,
+                comment: store.state.diaryState.comment,
+                item: store.state.diaryState.dropDownValue1,
+                area: store.state.diaryState.dropDownValue2,
+                taskCategory: store.state.diaryState.dropDownValue3,
+                tags: store.state.diaryState.tags,
+                events: store.state.diaryState.eventDropdownValue)
+            .then((value) {
+          print(value.body);
+        });
+      });
     }
 
     if (action is GetLocation) {

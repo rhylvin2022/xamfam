@@ -34,7 +34,7 @@ class _DiaryPageState extends State<DiaryPage> {
 
   @protected
   Future runInitTasks() async {
-    final store = StoreProvider.of<AppState>(context);
+    store = StoreProvider.of<AppState>(context);
     store?.dispatch(GetLocation());
   }
 

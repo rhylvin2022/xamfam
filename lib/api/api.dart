@@ -20,7 +20,6 @@ class API {
       'tags': tags,
       'events': events,
     });
-    print(body);
     return await http.post(
       Uri.parse('https://reqres.in/'),
       headers: <String, String>{
